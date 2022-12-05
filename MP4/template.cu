@@ -22,9 +22,9 @@ __global__ void conv3d(float *input, float *output, const int z_size,
   int ty = threadIdx.y;
   int tz = threadIdx.z;
 
-  int z_o = blockIdx.z * 6 + tz;
-  int y_o = blockIdx.y * 6 + ty;
-  int x_o = blockIdx.x * 6 + tx;
+  int z_o = blockIdx.z * (blockDim.z-2) + tz;
+  int y_o = blockIdx.y * (blockDim.y-2) + ty;
+  int x_o = blockIdx.x * (blockDim.x-2) + tx;
 
   int z_i = z_o-1;
   int y_i = y_o-1;
@@ -42,7 +42,7 @@ __global__ void conv3d(float *input, float *output, const int z_size,
 
   __syncthreads();
 
-  if ((tz < 6) && (ty < 6) && (tx < 6)) {
+  if ((tz < (blockDim.z-2)) && (ty < (blockDim.y-2)) && (tx < (blockDim.x-2))) {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
         for (int k = 0; k < 3; k++) {
