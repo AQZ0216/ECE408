@@ -3,17 +3,6 @@
 #include "gpu-new-forward.h"
 #include "cuda_fp16.h"
 
-
-// Tiled shared memory convolution (2 points)
-
-// Tuning with restrict and loop unrolling (considered as one optimization only if you do both) (3 points)
-// Sweeping various parameters to find best values (block sizes, amount of thread coarsening) (1 point)
-// Multiple kernel implementations for different layer sizes (1 point)
-
-// Fixed point (FP16) arithmetic. (note this can modify model accuracy slightly) (4 points)
-
-// An advanced matrix multiplication algorithm (register-tiled, for example) (5 points)
-
 __constant__ float Mc[16*4*7*7];
 
 // ---Weight matrix in constant memory + fusion kernel---
